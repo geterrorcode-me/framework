@@ -41,7 +41,7 @@ public class BRActivityThread {
     static {
         // Otomatis terisi melalui logic static initializer generator
     }
-}
+}```
 
 ​---
 
