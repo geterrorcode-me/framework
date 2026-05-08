@@ -1,9 +1,10 @@
 import org.jf.dexlib2.DexFileFactory;
-import org.jf.dexlib2.Opcodes;
+import org.jf.dexlib2.Opcodes; // Ini Opcodes milik DexLib2
 import org.jf.dexlib2.iface.ClassDef;
 import org.jf.dexlib2.iface.DexFile;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes as ASMOpcodes;
+// Hapus baris import Opcodes ASM yang bermasalah tadi
+
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -18,12 +19,12 @@ public class Generator {
         File outputDir = new File(args[1]);
         outputDir.mkdirs();
 
+        // Menggunakan Opcodes.getDefault() dari DexLib2
         DexFile dexFile = DexFileFactory.loadDexFile(inputFile, Opcodes.getDefault());
 
         for (ClassDef classDef : dexFile.getClasses()) {
             String className = classDef.getType();
             
-            // Filter hanya kelas Android
             if (className.startsWith("Landroid/") || className.startsWith("Lcom/android/")) {
                 generateMirror(classDef, outputDir);
             }
@@ -33,15 +34,17 @@ public class Generator {
     private static void generateMirror(ClassDef classDef, File outputDir) throws Exception {
         String originalName = classDef.getType().substring(1, classDef.getType().length() - 1);
         String simpleName = originalName.substring(originalName.lastIndexOf('/') + 1);
-        
-        // Ubah android/app/ActivityThread -> black/android/app/BRActivityThread
         String newName = "black/" + originalName.replace(simpleName, "BR" + simpleName);
 
         ClassWriter cw = new ClassWriter(0);
-        cw.visit(ASMOpcodes.V1_8, ASMOpcodes.ACC_PUBLIC, newName, null, "java/lang/Object", null);
+        
+        // Di sini kita panggil org.objectweb.asm.Opcodes secara langsung tanpa import alias
+        cw.visit(org.objectweb.asm.Opcodes.V1_8, 
+                 org.objectweb.asm.Opcodes.ACC_PUBLIC, 
+                 newName, null, "java/lang/Object", null);
 
-        // Tambahkan Field TYPE sebagai referensi class asli
-        cw.visitField(ASMOpcodes.ACC_PUBLIC | ASMOpcodes.ACC_STATIC, "TYPE", "Ljava/lang/Class;", null, null).visitEnd();
+        cw.visitField(org.objectweb.asm.Opcodes.ACC_PUBLIC | org.objectweb.asm.Opcodes.ACC_STATIC, 
+                      "TYPE", "Ljava/lang/Class;", null, null).visitEnd();
 
         cw.visitEnd();
 
