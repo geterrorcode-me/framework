@@ -3,6 +3,9 @@
 ![Build Status](https://img.shields.io/badge/Build-GitHub_Actions-blue?style=for-the-badge&logo=github)
 ![Chipset](https://img.shields.io/badge/Powered_By-Dimensity_8300_Ultra-orange?style=for-the-badge)
 ![Library](https://img.shields.io/badge/Core-ASM_|_Javassist-red?style=for-the-badge)
+<p align="center">
+Developed with ❤️ for the Android Community
+</p>
 
 **Mirror Generator** adalah alat otomatisasi tingkat tinggi untuk mengekstraksi dan membangun kelas "Mirror" dari `framework.jar` dan `services.jar` Android. Proyek ini memfasilitasi akses ke `@hide` API dan internal sistem Android dengan mengubah struktur paket menjadi prefix `black.android.*`.
 
