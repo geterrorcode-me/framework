@@ -25,7 +25,7 @@ jobs:
           ./gradlew run --args="input/framework.jar output_mirrors"
 
       - name: Upload Result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Mirror-Result
           path: output_mirrors/
