@@ -19,6 +19,12 @@
 * **CI/CD Ready**: Terintegrasi penuh dengan GitHub Actions untuk build otomatis skala besar.
 
 ---
+## 📋 Fitur & Alur Kerja
+1. Membaca input dari `input/framework.jar` dan `input/services.jar`.
+2. Melakukan scanning pada class `android/*` dan `com/android/internal/*`.
+3. Men-generate mirror class ke dalam package `black.android` dengan prefix `BR`.
+4. Membungkus semua output secara otomatis ke dalam satu file `android_mirror_full.jar`.
+---
 
 ## 🛠️ Arsitektur Output
 
@@ -62,13 +68,27 @@ public class ProjectStatus {
 }
 ```
 ---
+## 🎯 Kesimpulan Kualitas Hasil
+Berdasarkan struktur output yang dihasilkan oleh generator:
+
+| Komponen | Status |
+| :--- | :--- |
+| **Hidden API wrapper** | ✅ |
+| **Nested class support** | ✅ |
+| **Modern Android lambda** | ✅ |
+| **Massive framework coverage** | ✅ |
+| **black.android package** | ✅ |
+| **Reflection-ready** | ✅ |
+
+> **Analisis Teknis:**
+> Generator telah dikonfigurasi untuk menangani framework Android terbaru yang **heavily menggunakan lambda/d8/r8 synthetic**. Hal ini memastikan stabilitas akses pada bytecode yang sudah teroptimasi.
+---
 
 ## 🛡️ Tech Stack Summarized
 - **Environment:** Android Code Studio (ACS)
 - **Engine:** ASM v9.5 & Javassist
 - **Format:** DEX/JAR (Android System)
 - **Automation:** GitHub Actions CI/CD
-
 ---
 <p align="center">
   🚀 <i>Optimized for high-performance ARM64 architecture.</i>
