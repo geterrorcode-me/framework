@@ -4,6 +4,7 @@
 ![Chipset](https://img.shields.io/badge/Powered_By-Dimensity_8300_Ultra-orange?style=for-the-badge)
 ![Library](https://img.shields.io/badge/Core-ASM_|_Javassist-red?style=for-the-badge)
 [![Generate Android Mirrors JAR](https://github.com/geterrorcode-me/framework/actions/workflows/mirrorjar.yml/badge.svg)](https://github.com/geterrorcode-me/framework/actions/workflows/mirrorjar.yml)
+[![Generate Android Mirrors Classes](https://github.com/geterrorcode-me/framework/actions/workflows/mirrorclass.yml/badge.svg)](https://github.com/geterrorcode-me/framework/actions/workflows/mirrorclass.yml)
 
 **Mirror Generator** adalah alat otomatisasi tingkat tinggi untuk mengekstraksi dan membangun kelas "Mirror" dari `framework.jar` dan `services.jar` Android. Proyek ini memfasilitasi akses ke `@hide` API dan internal sistem Android dengan mengubah struktur paket menjadi prefix `black.android.*`.
 
