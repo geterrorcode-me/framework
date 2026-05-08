@@ -18,11 +18,10 @@ public class Generator {
         File outputDir = new File(args[1]);
         outputDir.mkdirs();
 
-        System.out.println("📦 Memproses kontainer: " + inputFile.getName());
+        System.out.println("📦 Memproses: " + inputFile.getName());
 
-        // Menggunakan loadDexContainer untuk menangani file .jar/.zip
-        MultiDexContainer<? extends MultiDexContainer.DexEntry> container = 
-            DexFileFactory.loadDexContainer(inputFile, Opcodes.getDefault());
+        // Gunakan raw type atau wildcard yang lebih fleksibel untuk menghindari CAP#1 error
+        MultiDexContainer<?> container = DexFileFactory.loadDexContainer(inputFile, Opcodes.getDefault());
 
         for (String entryName : container.getDexEntryNames()) {
             System.out.println("🔍 Membedah entry: " + entryName);
@@ -30,12 +29,13 @@ public class Generator {
 
             for (ClassDef classDef : dexFile.getClasses()) {
                 String className = classDef.getType();
+                // Filter framework
                 if (className.startsWith("Landroid/") || className.startsWith("Lcom/android/internal/")) {
                     generateMirror(classDef, outputDir);
                 }
             }
         }
-        System.out.println("✨ Selesai! Cek folder output.");
+        System.out.println("✨ Selesai!");
     }
 
     private static void generateMirror(ClassDef classDef, File outputDir) throws Exception {
