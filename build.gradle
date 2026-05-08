@@ -4,15 +4,16 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     google()
+    mavenCentral()
+    // Tambahkan jcenter sebagai fallback karena dexlib2 sering ada di sana
+    jcenter() 
 }
 
 dependencies {
-    // Parser untuk file DEX di dalam framework.jar
+    // Gunakan versi yang lebih stabil dan umum tersedia
     implementation 'com.android.tools.smali:dexlib2:2.5.2'
     
-    // Mesin manipulasi Bytecode
     implementation 'org.ow2.asm:asm:9.5'
     implementation 'org.ow2.asm:asm-commons:9.5'
 }
