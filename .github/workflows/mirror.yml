@@ -1,32 +1,45 @@
 name: Generate Android Mirrors
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Tombol manual di tab Actions
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'gradle'
 
-      - name: Download Framework
-        run: |
-          mkdir -p input
-          # Ganti URL ini dengan URL framework.jar Anda jika perlu
-          curl -L "https://github.com/S-trace/android_frameworks_base_mirror/raw/master/framework.jar" -o input/framework.jar
+      - name: Grant Execute Permission
+        run: chmod +x gradlew
 
-      - name: Run Generator
+      - name: Process Framework
         run: |
-          chmod +x gradlew
+          echo "🚀 Memulai Mirroring Framework..."
           ./gradlew run --args="input/framework.jar output_mirrors"
 
-      - name: Upload Result
+      - name: Process Services
+        run: |
+          echo "🚀 Memulai Mirroring Services..."
+          ./gradlew run --args="input/services.jar output_mirrors"
+
+      - name: Check Output
+        run: |
+          echo "📊 Statistik Output:"
+          find output_mirrors -name "*.class" | wc -l
+          echo " file mirror berhasil dibuat."
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Mirror-Result
+          name: Android-Mirror-Classes
           path: output_mirrors/
-          
+          retention-days: 7
