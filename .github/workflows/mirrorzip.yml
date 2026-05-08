@@ -1,4 +1,4 @@
-name: Generate Android Mirrors ZIP
+name: Generate Android Mirrors Classes
 
 on:
   workflow_dispatch: # Tombol manual di tab Actions
