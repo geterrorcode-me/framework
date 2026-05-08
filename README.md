@@ -43,6 +43,8 @@ public class BRActivityThread {
     }
 }
 
+​---
+
 ​<p align="center">
 Developed with ❤️ for the Android Community
 </p>
