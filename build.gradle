@@ -11,12 +11,13 @@ repositories {
 }
 
 dependencies {
-    // Gunakan versi yang lebih stabil dan umum tersedia
-    implementation 'com.android.tools.smali:dexlib2:2.5.2'
+    // Gunakan Group ID terbaru: org.smali
+    implementation 'org.smali:dexlib2:2.5.2'
     
     implementation 'org.ow2.asm:asm:9.5'
     implementation 'org.ow2.asm:asm-commons:9.5'
 }
+
 
 application {
     mainClass = 'Generator'

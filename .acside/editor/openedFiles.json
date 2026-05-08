@@ -1,32 +1,17 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/framework/.github/workflows/mirror.yml",
-      "selection": {
-        "end": {
-          "column": 40,
-          "index": 733,
-          "line": 27
-        },
-        "start": {
-          "column": 40,
-          "index": 733,
-          "line": 27
-        }
-      }
-    },
-    {
       "file": "/storage/emulated/0/AndroidIDEProjects/framework/build.gradle",
       "selection": {
         "end": {
           "column": 0,
-          "index": 0,
-          "line": 0
+          "index": 462,
+          "line": 23
         },
         "start": {
           "column": 0,
-          "index": 0,
-          "line": 0
+          "index": 462,
+          "line": 23
         }
       }
     }
