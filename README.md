@@ -28,9 +28,6 @@ Generator ini akan mentransformasi struktur internal kelas Android seperti conto
 | `android.app.ActivityThread` | `black.android.app.BRActivityThread` |
 | `android.os.ServiceManager` | `black.android.os.BRServiceManager` |
 | `android.content.pm.PackageParser` | `black.android.content.pm.BRPackageParser` |
-
-### Contoh Struktur Hasil:
-```java
 package black.android.app;
 
 public class BRActivityThread {
@@ -48,3 +45,20 @@ public class BRActivityThread {
 ​<p align="center">
 Developed with ❤️ for the Android Community
 </p>
+### Contoh Struktur Hasil:
+```java
+package black.android.app;
+
+public class BRActivityThread {
+    public static final Class<?> TYPE;
+    public static Method currentActivityThread;
+    public static Method getProcessName;
+    
+    static {
+        // Otomatis terisi melalui logic static initializer generator
+    }
+}```
+
+​---
+
+​
