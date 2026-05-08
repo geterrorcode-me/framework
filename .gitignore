@@ -1,0 +1,26 @@
+# Gradle files
+.gradle/
+build/
+
+# Java & Bytecode
+*.class
+*.jar
+*.war
+
+# ACS / Android Studio / IDE
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+bin/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project specific
+input/
+output_mirrors/
+*.zip
+
