@@ -3,11 +3,9 @@ import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.iface.ClassDef;
 import org.jf.dexlib2.iface.DexFile;
 import org.jf.dexlib2.iface.MultiDexContainer;
-import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -26,10 +24,10 @@ public class Generator {
         System.out.println("📦 Menganalisis file: " + inputFile.getName());
 
         try (ZipFile zipFile = new ZipFile(inputFile)) {
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
             boolean hasDex = false;
-
-            // Cek apakah ada file .dex di dalamnya
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            
+            // Cek apakah ini file Android (ada .dex) atau Java biasa (ada .class)
             while (entries.hasMoreElements()) {
                 if (entries.nextElement().getName().endsWith(".dex")) {
                     hasDex = true;
@@ -38,14 +36,14 @@ public class Generator {
             }
 
             if (hasDex) {
-                System.out.println("🤖 Mode: Android DEX Detected");
+                System.out.println("🤖 Mode: Android DEX detected.");
                 processAsDex(inputFile, outputDir);
             } else {
-                System.out.println("☕ Mode: Java Class Detected");
+                System.out.println("☕ Mode: Java Class detected.");
                 processAsClass(inputFile, outputDir);
             }
         }
-        System.out.println("✨ Selesai! Semua mirror telah di-generate.");
+        System.out.println("✨ Selesai! Cek folder: " + outputDir.getName());
     }
 
     private static void processAsDex(File file, File outputDir) throws Exception {
@@ -54,7 +52,8 @@ public class Generator {
             DexFile dexFile = container.getEntry(entryName).getDexFile();
             for (ClassDef classDef : dexFile.getClasses()) {
                 String className = classDef.getType();
-                if (className.startsWith("Landroid/") || className.startsWith("Lcom/android/internal/")) {
+                if (className.startsWith("Landroid/") || className.startsWith("Lcom/android/")) {
+                    // Hilangkan L di depan dan ; di belakang (Landroid/app/Activity; -> android/app/Activity)
                     generateMirror(className.substring(1, className.length() - 1), outputDir);
                 }
             }
@@ -65,11 +64,10 @@ public class Generator {
         try (ZipFile zipFile = new ZipFile(file)) {
             Enumeration<? extends ZipEntry> entries = zipFile.entries();
             while (entries.hasMoreElements()) {
-                ZipEntry entry = entries.nextElement();
-                String name = entry.getName();
+                String name = entries.nextElement().getName();
                 if (name.endsWith(".class")) {
                     String className = name.replace(".class", "");
-                    if (className.startsWith("android/") || className.startsWith("com/android/internal/")) {
+                    if (className.startsWith("android/") || className.startsWith("com/android/")) {
                         generateMirror(className, outputDir);
                     }
                 }
@@ -78,6 +76,7 @@ public class Generator {
     }
 
     private static void generateMirror(String internalName, File outputDir) throws Exception {
+        // android/app/Activity -> black/android/app/BRActivity
         String simpleName = internalName.substring(internalName.lastIndexOf('/') + 1);
         String newName = "black/" + internalName.replace(simpleName, "BR" + simpleName);
 
